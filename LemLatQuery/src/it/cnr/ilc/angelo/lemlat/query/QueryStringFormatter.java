@@ -67,7 +67,7 @@ public class QueryStringFormatter {
 		
 		QueryStringFormatter qsf = new QueryStringFormatter("http://www.ilc.cnr.it");
 		qsf.setBaseURL("/lemlat/cgi-bin/LemLat_cgi.cgi");
-		qsf.addQuery("World+Form", "homini");
+		qsf.addQuery("World+Form", "canis");
 		System.out.println(qsf.getQueryBase() + qsf.getQueryString());
 		
 

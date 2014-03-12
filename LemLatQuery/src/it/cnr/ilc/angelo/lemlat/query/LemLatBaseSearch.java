@@ -84,7 +84,7 @@ public class LemLatBaseSearch {
 		
 		QueryStringFormatter formatter = new QueryStringFormatter("http://www.ilc.cnr.it/lemlat/");
 		formatter.setBaseURL("cgi-bin/LemLat_cgi.cgi/LemLat_cgi.cgi");
-		formatter.addQuery("World+Form", "homini");
+		formatter.addQuery("World+Form", "canis");
 		
 		LemLatBaseSearch lemlatSearch = new LemLatBaseSearch(formatter);
 		BufferedReader reader = lemlatSearch.queryPerform();
