@@ -23,7 +23,7 @@ public class QueryStringFormatter {
 		this.queryBase = qBase;
 	}
 	
-	public void addQuery(String queryString, String queryValue) throws Exception{
+	public void addQuery(String queryString, String queryValue) throws UnsupportedEncodingException  {
 		query.append(queryString+"="+URLEncoder.encode(queryValue, "UTF-8")+"&");
 	}
 	

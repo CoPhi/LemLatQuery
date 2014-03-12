@@ -5,6 +5,7 @@ package it.cnr.ilc.angelo.lemlat.query;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.StringReader;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class LemLatBaseSearch {
 
 	private QueryStringFormatter query = null;
-	
+
 	/**
 	 * 
 	 */
@@ -33,33 +34,27 @@ public class LemLatBaseSearch {
 		this.query = qStringFormatter;
 	}
 
-	public BufferedReader queryPerform(){
+	public BufferedReader queryPerform() throws IOException{
 		System.err.println("in queryPerform");
 		BufferedReader reader =null;
-		try {
-			URL baseUrl = new URL(query.getQueryBase()+query.getQueryString());
-			
-			System.err.println(baseUrl.toExternalForm());
-			
-			HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
-			connection.setDoOutput(true);
-			
-			
-			//PrintStream ps = new PrintStream(connection.getOutputStream());
-			//ps.println(getQuery().getQueryString());
-			//ps.println("");
-			//Map<String, List<String>> header = connection.getHeaderFields();
-			//ps.close();
-			
-			DataInputStream input = new DataInputStream(connection.getInputStream());
-			
-			reader = new BufferedReader(new InputStreamReader(input));  
-			//reader =  new BufferedReader(new StringReader(new String(String.valueOf(connection.getResponseCode()))));
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		URL baseUrl = new URL(query.getQueryBase()+query.getQueryString());
+
+		System.err.println(baseUrl.toExternalForm());
+
+		HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
+		connection.setDoOutput(true);
+
+
+		//PrintStream ps = new PrintStream(connection.getOutputStream());
+		//ps.println(getQuery().getQueryString());
+		//ps.println("");
+		//Map<String, List<String>> header = connection.getHeaderFields();
+		//ps.close();
+
+		DataInputStream input = new DataInputStream(connection.getInputStream());
+
+		reader = new BufferedReader(new InputStreamReader(input));  
+		//reader =  new BufferedReader(new StringReader(new String(String.valueOf(connection.getResponseCode()))));
 		return reader;
 	}
 
@@ -81,19 +76,19 @@ public class LemLatBaseSearch {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		
+
 		QueryStringFormatter formatter = new QueryStringFormatter("http://www.ilc.cnr.it/lemlat/");
 		formatter.setBaseURL("cgi-bin/LemLat_cgi.cgi/LemLat_cgi.cgi");
 		formatter.addQuery("World+Form", "canis");
-		
+
 		LemLatBaseSearch lemlatSearch = new LemLatBaseSearch(formatter);
 		BufferedReader reader = lemlatSearch.queryPerform();
-		
+
 		String line = null;
 		while( (line = reader.readLine()) != null) {
-			System.out.println("HTML_UNPARSED_LINE++>>>    " + line);
+			System.out.println(line);
 		}
 
 	}
-	
+
 }
