@@ -44,7 +44,15 @@ public class LemLatQuery {
 		try {
 			reader = new LemLatQuery().perform(args[0]);
 			parse = new ParseReader(reader);
-			System.err.println(parse.parse());
+			parse.HTMLparse();
+			//System.err.println(parse.getDoc().html());
+			parse.buildResult();
+			//System.err.println(parse.getResult().getQueryForm());
+			System.err.println(parse.getResult().getCount().intValue());
+			
+
+		}catch (NullPointerException npe){
+			npe.printStackTrace();
 
 		} catch (UnsupportedEncodingException ue) {
 			ue.printStackTrace();
