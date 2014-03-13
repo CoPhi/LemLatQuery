@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public class LemLatQuery {
 
+	//FIXME FIX FIX FIX
+	private static Map<String, List<String>> analysis = null;
 	/**
 	 * 
 	 */
@@ -40,12 +42,17 @@ public class LemLatQuery {
 		return lemlatSearch.queryPerform();
 	}
 
+	public static StringBuilder analysisStringBuider(){
+		return PrintHandler.StringBuiderAnalysis(analysis);
+	}
+	
 	public static void main(String[] args) {
 
 		BufferedReader reader = null;
 		ParseReader parse = null;
 
 		try {
+			System.err.println(args[0]);
 			reader = new LemLatQuery().perform(args[0]);
 			parse = new ParseReader(reader);
 			parse.HTMLparse();
@@ -56,6 +63,8 @@ public class LemLatQuery {
 			
 			PrintHandler.printAnalysis(parse.getResult().getQueryLemmasMorphos());
 			
+			//FIXME solo a scopo di test.. Togliere lo static
+			analysis = parse.getResult().getQueryLemmasMorphos();
 			
 			
 
