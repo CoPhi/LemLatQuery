@@ -90,16 +90,16 @@ public class ParseReader {
 			Element TbodyAnalysis = null;
 			while (count>0) {
 				TbodyAnalysis = tableAnalysis.get(count -1);
-				lemma = extractLemma(TbodyAnalysis);
+				lemma = "__"+count+"__" + extractLemma(TbodyAnalysis);
 				morpho = extractMorpho(TbodyAnalysis);
 				//System.err.println(TbodyAnalysis.html());
-				for (String morf : morpho) {
-					System.err.println("****"+morf+"****");
-				}
+//				for (String morf : morpho) {
+//					System.err.println("****"+morf+"****");
+//				}
+				analysis.put(lemma, morpho);
 				count--;
 			}
 		}
-		//count = doc.select("table>tr>tbody>th[style=background-color: #999999;color: white]").size();
 
 		return analysis;
 	}

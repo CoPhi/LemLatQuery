@@ -7,10 +7,14 @@ import it.cnr.ilc.angelo.lemlat.consts.*;
 import it.cnr.ilc.angelo.lemlat.parse.ParseReader;
 import it.cnr.ilc.angelo.lemlat.query.LemLatBaseSearch;
 import it.cnr.ilc.angelo.lemlat.query.QueryStringFormatter;
+import it.cnr.ilc.angelo.lemlat.utils.PrintHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Angelo Del Grosso
@@ -49,6 +53,10 @@ public class LemLatQuery {
 			parse.buildResult();
 			//System.err.println(parse.getResult().getQueryForm());
 			System.err.println(parse.getResult().getCount().intValue());
+			
+			PrintHandler.printAnalysis(parse.getResult().getQueryLemmasMorphos());
+			
+			
 			
 
 		}catch (NullPointerException npe){
