@@ -27,7 +27,7 @@ public class ParseReader {
 
 	private Reader reader = null;
 	private Document doc = null;
-	
+
 	private LemLatResult result = null;
 
 	/**
@@ -36,7 +36,7 @@ public class ParseReader {
 	public ParseReader(Reader reader) {
 		// TODO Auto-generated constructor stub
 		this.reader = reader;
-		
+
 	}
 
 	private String parse() throws IOException{
@@ -49,13 +49,13 @@ public class ParseReader {
 			}
 		return content.toString();
 	}
-	
+
 	public void HTMLparse() throws IOException{
 		String html = parse();
 		//System.err.println(html);
 		this.doc = Jsoup.parse(html);
 	}
-	
+
 	public void buildResult() throws NullPointerException{
 		if(null==result)
 			result = new LemLatResult();
@@ -64,7 +64,7 @@ public class ParseReader {
 		result.setQueryForm(extractQueryForm());
 		result.setCount(exractCount());
 		result.setQueryLemmasMorphos(extractAnalysis());
-		
+
 	}
 
 
@@ -92,12 +92,15 @@ public class ParseReader {
 				TbodyAnalysis = tableAnalysis.get(count -1);
 				lemma = extractLemma(TbodyAnalysis);
 				morpho = extractMorpho(TbodyAnalysis);
-				System.err.println(TbodyAnalysis.html());
+				//System.err.println(TbodyAnalysis.html());
+				for (String morf : morpho) {
+					System.err.println("****"+morf+"****");
+				}
 				count--;
 			}
 		}
 		//count = doc.select("table>tr>tbody>th[style=background-color: #999999;color: white]").size();
-		
+
 		return analysis;
 	}
 
@@ -105,7 +108,13 @@ public class ParseReader {
 		//FIXME add exception handling
 		List<String> morpho = null;
 		morpho = new ArrayList<>();
-		Elements liMorpho = TbodyAnalysis.select("tbody>tr>td>ol");
+		Elements liMorpho = null;
+		liMorpho =	TbodyAnalysis.select("tbody>tr>td>ol>li");
+		System.err.println(liMorpho.size());
+		// NOTA: non tutta la morfologia è gestita con lo stesso albero DOM
+		if (liMorpho.size() == 0){
+			liMorpho = TbodyAnalysis.select("tbody>tr>td:has(b)");
+		}
 		for (Element morphoItem : liMorpho) {
 			morpho.add(morphoItem.text());
 		}
@@ -155,17 +164,17 @@ public class ParseReader {
 		this.doc = doc;
 	}
 
-	
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		Reader reader = null;
 		reader = new BufferedReader(new StringReader("<html><body><p>Ciao</p></body></html>"));
 		ParseReader parser = new ParseReader(reader);
-		
+
 		try {
 			//System.err.println(parser.parse());
 			parser.HTMLparse();
@@ -178,7 +187,7 @@ public class ParseReader {
 				// TODO: handle exception
 			}
 		}
-		
+
 		System.out.println(parser.getDoc().html());
 
 	}
@@ -196,5 +205,5 @@ public class ParseReader {
 	public void setResult(LemLatResult result) {
 		this.result = result;
 	}
-	
+
 }
