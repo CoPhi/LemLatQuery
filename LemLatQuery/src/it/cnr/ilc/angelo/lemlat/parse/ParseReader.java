@@ -84,7 +84,7 @@ public class ParseReader {
 		List<String> morpho = null;
 		int count = getResult().getCount().intValue();
 		Elements tableAnalysis = doc.select("table>tbody>tr>td>table");
-		System.err.println(tableAnalysis.size());
+		//System.err.println(tableAnalysis.size());
 		if(count == tableAnalysis.size() ){
 			analysis = new HashMap<String, List<String>>();
 			Element TbodyAnalysis = null;
@@ -110,7 +110,7 @@ public class ParseReader {
 		morpho = new ArrayList<>();
 		Elements liMorpho = null;
 		liMorpho =	TbodyAnalysis.select("tbody>tr>td>ol>li");
-		System.err.println(liMorpho.size());
+		//System.err.println(liMorpho.size());
 		// NOTA: non tutta la morfologia è gestita con lo stesso albero DOM
 		if (liMorpho.size() == 0){
 			liMorpho = TbodyAnalysis.select("tbody>tr>td:has(b)");

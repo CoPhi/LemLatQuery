@@ -30,16 +30,16 @@ public class LemLatBaseSearch {
 	 */
 	public LemLatBaseSearch(QueryStringFormatter qStringFormatter) {
 		// TODO Auto-generated constructor stub
-		System.err.println("in LemLatBaseSearch");
+		//System.err.println("in LemLatBaseSearch");
 		this.query = qStringFormatter;
 	}
 
 	public BufferedReader queryPerform() throws IOException{
-		System.err.println("in queryPerform");
+		//System.err.println("in queryPerform");
 		BufferedReader reader =null;
 		URL baseUrl = new URL(query.getQueryBase()+query.getQueryString());
 
-		System.err.println(baseUrl.toExternalForm());
+		//System.err.println(baseUrl.toExternalForm());
 
 		HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
 		connection.setDoOutput(true);

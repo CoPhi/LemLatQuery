@@ -52,7 +52,7 @@ public class LemLatQuery {
 			//System.err.println(parse.getDoc().html());
 			parse.buildResult();
 			//System.err.println(parse.getResult().getQueryForm());
-			System.err.println(parse.getResult().getCount().intValue());
+			//System.err.println(parse.getResult().getCount().intValue());
 			
 			PrintHandler.printAnalysis(parse.getResult().getQueryLemmasMorphos());
 			
