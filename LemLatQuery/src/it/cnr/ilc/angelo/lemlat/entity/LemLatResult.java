@@ -13,7 +13,7 @@ import java.util.Map;
 public class LemLatResult {
 
 	private String queryForm="";
-	private Map<String, List<String>> queryLemmasMorphos=null; // ciascun lemma associato alla forma ha molteplici lettura morfologiche. Esempio: 
+	private Map<String, List<String>> queryLemmasMorphos=null; // ciascun lemma associato alla forma ha molteplici letture morfologiche. Esempio: 
 	private Integer count = null;
 	/**
 	 * 

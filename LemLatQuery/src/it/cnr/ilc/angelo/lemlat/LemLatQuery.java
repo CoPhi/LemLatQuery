@@ -52,7 +52,7 @@ public class LemLatQuery {
 		ParseReader parse = null;
 
 		try {
-			System.err.println(args[0]);
+			System.out.println(args[0]);
 			reader = new LemLatQuery().perform(args[0]);
 			parse = new ParseReader(reader);
 			parse.HTMLparse();

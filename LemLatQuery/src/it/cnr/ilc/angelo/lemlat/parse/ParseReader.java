@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,6 +75,7 @@ public class ParseReader {
 		Integer count = null;
 		int cnt = doc.select("table>tbody>tr>th[style=background-color: #999999;color: white]").size();
 		count = new Integer(cnt);
+		//System.err.println("exractCount: "+ count.intValue());
 		return count;
 	}
 
@@ -86,11 +88,11 @@ public class ParseReader {
 		Elements tableAnalysis = doc.select("table>tbody>tr>td>table");
 		//System.err.println(tableAnalysis.size());
 		if(count == tableAnalysis.size() ){
-			analysis = new HashMap<String, List<String>>();
+			analysis = new LinkedHashMap<String, List<String>>();
 			Element TbodyAnalysis = null;
 			while (count>0) {
 				TbodyAnalysis = tableAnalysis.get(count -1);
-				lemma = "__"+count+"__" + extractLemma(TbodyAnalysis);
+				lemma = "_"+count+"-> " + extractLemma(TbodyAnalysis);
 				morpho = extractMorpho(TbodyAnalysis);
 				//System.err.println(TbodyAnalysis.html());
 //				for (String morf : morpho) {
@@ -109,7 +111,7 @@ public class ParseReader {
 		List<String> morpho = null;
 		morpho = new ArrayList<>();
 		Elements liMorpho = null;
-		liMorpho =	TbodyAnalysis.select("tbody>tr>td>ol>li");
+		liMorpho =	TbodyAnalysis.select("tbody>tr>td>ol>li:has(b)");
 		//System.err.println(liMorpho.size());
 		// NOTA: non tutta la morfologia è gestita con lo stesso albero DOM
 		if (liMorpho.size() == 0){
@@ -123,7 +125,13 @@ public class ParseReader {
 
 	private String extractLemma(Element TbodyAnalysis) {
 		String lemma = null;
-		lemma = TbodyAnalysis.select("tbody>tr>td>u").first().parent().text();
+		Element lemmaElement = null;
+		lemmaElement = TbodyAnalysis.select("tbody>tr>td>u").first();
+		//FIXME non sempre il lema è unico
+		if(null == lemmaElement)
+			lemmaElement = TbodyAnalysis.select("tbody>tr>td>ol>li>u").first();
+		
+		lemma = lemmaElement.parent().text();
 		//System.err.println("extractLemma: " +lemma);
 		return lemma;
 	}
